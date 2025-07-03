@@ -6,7 +6,9 @@ class HomeTabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Home')),
+      body: Center(
+        child: Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+      ),
     );
   }
 }
