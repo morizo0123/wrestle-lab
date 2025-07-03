@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wrestle_lab/features/home/viewmodels/home_viewmodel.dart';
+import 'package:wrestle_lab/features/events/screens/events_screen.dart';
+import 'package:wrestle_lab/features/home/screens/home_tab_screen.dart';
+import 'package:wrestle_lab/features/my_history/screens/history_screen.dart';
+import 'package:wrestle_lab/features/news/screens/news_screen.dart';
+import 'package:wrestle_lab/features/organizations/screens/organizations_screen.dart';
+import 'package:wrestle_lab/features/youtube_search/screens/youtube_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -16,12 +22,12 @@ class HomeScreen extends ConsumerWidget {
       body: IndexedStack(
         index: currentIndex,
         children: [
-          Center(child: Text('Home')),
-          Center(child: Text('イベント')),
-          Center(child: Text('団体')),
-          Center(child: Text('YouTube')),
-          Center(child: Text('履歴')),
-          Center(child: Text('ニュース')),
+          HomeTabScreen(),
+          EventsScreen(),
+          OrganizationsScreen(),
+          YoutubeScreen(),
+          HistoryScreen(),
+          NewsScreen(),
         ],
       ),
 
