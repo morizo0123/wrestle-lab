@@ -11,7 +11,10 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   @override
   Future<List<Organization>> getOrganizations() async {
     try {
-      final response = await _client.from('organizations').select();
+      final response = await _client
+          .from('organizations')
+          .select()
+          .order('id', ascending: true);
       final List<dynamic> data = response;
       return data.map((json) => Organization.fromJson(json)).toList();
     } catch (e) {

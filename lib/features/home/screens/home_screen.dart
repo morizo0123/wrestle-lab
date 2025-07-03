@@ -1,80 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wrestle_lab/features/home/viewmodels/home_viewmodel.dart';
-import 'package:wrestle_lab/features/events/screens/events_screen.dart';
-import 'package:wrestle_lab/features/home/screens/home_tab_screen.dart';
-import 'package:wrestle_lab/features/my_history/screens/history_screen.dart';
-import 'package:wrestle_lab/features/news/screens/news_screen.dart';
-import 'package:wrestle_lab/features/organizations/screens/organizations_screen.dart';
-import 'package:wrestle_lab/features/youtube_search/screens/youtube_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:wrestle_lab/features/home/screens/widgets/bottom_nav_bar.dart';
+import 'package:wrestle_lab/routes/route_utils.dart';
 
-class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  final Widget child;
+
+  const HomeScreen({super.key, required this.child});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = ref.watch(homeViewModelProvider);
-    final viewModel = ref.read(homeViewModelProvider.notifier);
+  Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).uri.toString();
+    final title = getTitleFromLocation(location);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-
-      body: IndexedStack(
-        index: currentIndex,
-        children: [
-          HomeTabScreen(),
-          EventsScreen(),
-          OrganizationsScreen(),
-          YoutubeScreen(),
-          HistoryScreen(),
-          NewsScreen(),
-        ],
-      ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
+      appBar: AppBar(
+        title: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
-        currentIndex: currentIndex,
-        onTap: (index) {
-          viewModel.setIndex(index);
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today_outlined),
-            activeIcon: Icon(Icons.calendar_today),
-            label: 'イベント',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.groups_outlined),
-            activeIcon: Icon(Icons.groups),
-            label: '団体',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.play_circle_outlined),
-            activeIcon: Icon(Icons.play_circle),
-            label: 'YouTube',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history_outlined),
-            activeIcon: Icon(Icons.history),
-            label: '履歴',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper_outlined),
-            activeIcon: Icon(Icons.newspaper),
-            label: 'ニュース',
-          ),
-        ],
+        foregroundColor: Colors.black,
+        elevation: 0,
+        centerTitle: true,
       ),
+      body: child,
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }
