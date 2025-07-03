@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wrestle_lab/features/home/screens/widgets/bottom_nav_bar.dart';
+import 'package:wrestle_lab/features/root/screens/widgets/bottom_nav_bar.dart';
 import 'package:wrestle_lab/routes/route_utils.dart';
 
-class HomeScreen extends StatelessWidget {
+class RootLayout extends StatelessWidget {
   final Widget child;
 
-  const HomeScreen({super.key, required this.child});
+  const RootLayout({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

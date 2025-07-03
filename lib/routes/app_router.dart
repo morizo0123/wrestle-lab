@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wrestle_lab/features/events/screens/events_screen.dart';
-import 'package:wrestle_lab/features/home/screens/home_screen.dart';
+import 'package:wrestle_lab/features/root/screens/root_layout.dart';
 import 'package:wrestle_lab/features/home/screens/home_tab_screen.dart';
 import 'package:wrestle_lab/features/my_history/screens/history_screen.dart';
 import 'package:wrestle_lab/features/news/screens/news_screen.dart';
@@ -15,7 +15,7 @@ final appRouter = GoRouter(
   routes: [
     ShellRoute(
       builder: (context, state, child) {
-        return HomeScreen(child: child);
+        return RootLayout(child: child);
       },
       routes: [
         GoRoute(
