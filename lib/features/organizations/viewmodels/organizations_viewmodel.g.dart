@@ -48,7 +48,7 @@ final organizationServiceProvider =
 // ignore: unused_element
 typedef OrganizationServiceRef = AutoDisposeProviderRef<OrganizationService>;
 String _$organizationsViewModelHash() =>
-    r'266213534a9fd3560509a81e6b34c6f41a5b4839';
+    r'd353b6dcb10f28fdbd10261740460c1c2c38dd19';
 
 /// See also [OrganizationsViewModel].
 @ProviderFor(OrganizationsViewModel)
