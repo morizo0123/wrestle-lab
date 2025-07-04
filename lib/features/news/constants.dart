@@ -1,0 +1,23 @@
+class NewsConstants {
+  NewsConstants._();
+
+  // GoogleニュースRSSのベースURL
+  static const String baseRssUrl = 'https://news.google.com/rss/search?q=';
+
+  // プロレス関連キーワード
+  static const List<String> wrestlingKeywords = [
+    '新日本プロレス',
+    'プロレスリング・ノア',
+    'スターダム',
+  ];
+
+  // RSS取得設定
+  static const String rssLanguage = 'ja';
+  static const String rssCountry = 'JP';
+  static const int maxNewsItems = 50;
+  static const String rssDateFormat = 'EEE, dd MMM yyyy HH:mm:ss Z';
+
+  // キャッシュ設定
+  static const Duration cacheExpiration = Duration(seconds: 30);
+  static const String cacheKey = 'wrestling_news_cache';
+}
