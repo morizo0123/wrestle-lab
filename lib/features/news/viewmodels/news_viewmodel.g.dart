@@ -40,7 +40,7 @@ final newsServiceProvider = AutoDisposeProvider<NewsService>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef NewsServiceRef = AutoDisposeProviderRef<NewsService>;
-String _$newsViewModelHash() => r'93464e1f1947896b0d0797e279e0c315951c5af7';
+String _$newsViewModelHash() => r'a1da5e942af5f4a2096c55cc465497b95d61e9e1';
 
 /// See also [NewsViewModel].
 @ProviderFor(NewsViewModel)

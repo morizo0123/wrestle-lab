@@ -82,7 +82,7 @@ as String,
 
 
 class _NewsViewState implements NewsViewState {
-  const _NewsViewState({final  List<NewsItem> news = const [], this.isLoading = false, this.isLoadingMore = false, this.hasMoreData = false, this.error, this.selectedCategory = 'All'}): _news = news;
+  const _NewsViewState({final  List<NewsItem> news = const [], this.isLoading = false, this.isLoadingMore = false, this.hasMoreData = true, this.error, this.selectedCategory = 'All'}): _news = news;
   
 
  final  List<NewsItem> _news;
