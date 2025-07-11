@@ -9,7 +9,7 @@ import 'package:wrestle_lab/features/my_history/screens/history_screen.dart';
 import 'package:wrestle_lab/features/news/screens/news_screen.dart';
 import 'package:wrestle_lab/features/organizations/screens/organization_webview_screen.dart';
 import 'package:wrestle_lab/features/organizations/screens/organizations_screen.dart';
-import 'package:wrestle_lab/features/youtube_search/screens/youtube_screen.dart';
+import 'package:wrestle_lab/features/youtube/screens/youtube_screen.dart';
 import 'package:wrestle_lab/routes/route_path_name.dart';
 
 final appRouter = GoRouter(
