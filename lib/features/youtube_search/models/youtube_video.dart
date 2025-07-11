@@ -7,12 +7,12 @@ part 'youtube_video.g.dart';
 abstract class YoutubeVideo with _$YoutubeVideo {
   const factory YoutubeVideo({
     required int id,
-    required String videoId,
+    @JsonKey(name: 'video_id') required String videoId,
     required String title,
     required String url,
     required String thumbnail,
-    required String channelTitle,
-    required DateTime publishedAt,
+    @JsonKey(name: 'channel_title') required String channelTitle,
+    @JsonKey(name: 'published_at') required DateTime publishedAt,
   }) = _YoutubeVideo;
 
   factory YoutubeVideo.fromJson(Map<String, dynamic> json) =>

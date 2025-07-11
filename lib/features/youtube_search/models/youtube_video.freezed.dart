@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$YoutubeVideo {
 
- int get id; String get videoId; String get title; String get url; String get thumbnail; String? get channelTitle; DateTime? get publishedAt;
+ int get id;@JsonKey(name: 'video_id') String get videoId; String get title; String get url; String get thumbnail;@JsonKey(name: 'channel_title') String get channelTitle;@JsonKey(name: 'published_at') DateTime get publishedAt;
 /// Create a copy of YoutubeVideo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $YoutubeVideoCopyWith<$Res>  {
   factory $YoutubeVideoCopyWith(YoutubeVideo value, $Res Function(YoutubeVideo) _then) = _$YoutubeVideoCopyWithImpl;
 @useResult
 $Res call({
- int id, String videoId, String title, String url, String thumbnail, String? channelTitle, DateTime? publishedAt
+ int id,@JsonKey(name: 'video_id') String videoId, String title, String url, String thumbnail,@JsonKey(name: 'channel_title') String channelTitle,@JsonKey(name: 'published_at') DateTime publishedAt
 });
 
 
@@ -66,16 +66,16 @@ class _$YoutubeVideoCopyWithImpl<$Res>
 
 /// Create a copy of YoutubeVideo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? videoId = null,Object? title = null,Object? url = null,Object? thumbnail = null,Object? channelTitle = freezed,Object? publishedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? videoId = null,Object? title = null,Object? url = null,Object? thumbnail = null,Object? channelTitle = null,Object? publishedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,videoId: null == videoId ? _self.videoId : videoId // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,thumbnail: null == thumbnail ? _self.thumbnail : thumbnail // ignore: cast_nullable_to_non_nullable
-as String,channelTitle: freezed == channelTitle ? _self.channelTitle : channelTitle // ignore: cast_nullable_to_non_nullable
-as String?,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as String,channelTitle: null == channelTitle ? _self.channelTitle : channelTitle // ignore: cast_nullable_to_non_nullable
+as String,publishedAt: null == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 
@@ -86,16 +86,16 @@ as DateTime?,
 @JsonSerializable()
 
 class _YoutubeVideo implements YoutubeVideo {
-  const _YoutubeVideo({required this.id, required this.videoId, required this.title, required this.url, required this.thumbnail, this.channelTitle, this.publishedAt});
+  const _YoutubeVideo({required this.id, @JsonKey(name: 'video_id') required this.videoId, required this.title, required this.url, required this.thumbnail, @JsonKey(name: 'channel_title') required this.channelTitle, @JsonKey(name: 'published_at') required this.publishedAt});
   factory _YoutubeVideo.fromJson(Map<String, dynamic> json) => _$YoutubeVideoFromJson(json);
 
 @override final  int id;
-@override final  String videoId;
+@override@JsonKey(name: 'video_id') final  String videoId;
 @override final  String title;
 @override final  String url;
 @override final  String thumbnail;
-@override final  String? channelTitle;
-@override final  DateTime? publishedAt;
+@override@JsonKey(name: 'channel_title') final  String channelTitle;
+@override@JsonKey(name: 'published_at') final  DateTime publishedAt;
 
 /// Create a copy of YoutubeVideo
 /// with the given fields replaced by the non-null parameter values.
@@ -130,7 +130,7 @@ abstract mixin class _$YoutubeVideoCopyWith<$Res> implements $YoutubeVideoCopyWi
   factory _$YoutubeVideoCopyWith(_YoutubeVideo value, $Res Function(_YoutubeVideo) _then) = __$YoutubeVideoCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String videoId, String title, String url, String thumbnail, String? channelTitle, DateTime? publishedAt
+ int id,@JsonKey(name: 'video_id') String videoId, String title, String url, String thumbnail,@JsonKey(name: 'channel_title') String channelTitle,@JsonKey(name: 'published_at') DateTime publishedAt
 });
 
 
@@ -147,16 +147,16 @@ class __$YoutubeVideoCopyWithImpl<$Res>
 
 /// Create a copy of YoutubeVideo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? videoId = null,Object? title = null,Object? url = null,Object? thumbnail = null,Object? channelTitle = freezed,Object? publishedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? videoId = null,Object? title = null,Object? url = null,Object? thumbnail = null,Object? channelTitle = null,Object? publishedAt = null,}) {
   return _then(_YoutubeVideo(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,videoId: null == videoId ? _self.videoId : videoId // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,thumbnail: null == thumbnail ? _self.thumbnail : thumbnail // ignore: cast_nullable_to_non_nullable
-as String,channelTitle: freezed == channelTitle ? _self.channelTitle : channelTitle // ignore: cast_nullable_to_non_nullable
-as String?,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as String,channelTitle: null == channelTitle ? _self.channelTitle : channelTitle // ignore: cast_nullable_to_non_nullable
+as String,publishedAt: null == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 

@@ -9,24 +9,21 @@ part of 'youtube_video.dart';
 _YoutubeVideo _$YoutubeVideoFromJson(Map<String, dynamic> json) =>
     _YoutubeVideo(
       id: (json['id'] as num).toInt(),
-      videoId: json['videoId'] as String,
+      videoId: json['video_id'] as String,
       title: json['title'] as String,
       url: json['url'] as String,
       thumbnail: json['thumbnail'] as String,
-      channelTitle: json['channelTitle'] as String?,
-      publishedAt:
-          json['publishedAt'] == null
-              ? null
-              : DateTime.parse(json['publishedAt'] as String),
+      channelTitle: json['channel_title'] as String,
+      publishedAt: DateTime.parse(json['published_at'] as String),
     );
 
 Map<String, dynamic> _$YoutubeVideoToJson(_YoutubeVideo instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'videoId': instance.videoId,
+      'video_id': instance.videoId,
       'title': instance.title,
       'url': instance.url,
       'thumbnail': instance.thumbnail,
-      'channelTitle': instance.channelTitle,
-      'publishedAt': instance.publishedAt?.toIso8601String(),
+      'channel_title': instance.channelTitle,
+      'published_at': instance.publishedAt.toIso8601String(),
     };
