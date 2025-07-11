@@ -3,6 +3,7 @@ class NewsConstants {
 
   // GoogleニュースRSSのベースURL
   static const String baseRssUrl = 'https://news.google.com/rss/search?q=';
+  static const String rssParams = '&hl=ja&gl=JP&ceid=JP:ja';
 
   // プロレス関連キーワード
   static const List<String> wrestlingKeywords = [
@@ -14,10 +15,19 @@ class NewsConstants {
   // UI表示用
   static const String allCategoryLabel = '全て';
 
+  // カテゴリ定義
+  static const String allCategory = 'All';
+  static const List<String> categories = [
+    allCategory,
+    '新日本プロレス',
+    'プロレスリング・ノア',
+    'スターダム',
+  ];
+
   // RSS取得設定
   static const String rssLanguage = 'ja';
   static const String rssCountry = 'JP';
-  static const int maxNewsItems = 50;
+  static const int newsItemsPerPage = 50;
   static const String rssDateFormat = 'EEE, dd MMM yyyy HH:mm:ss zzz';
   static const String rssDateLocale = 'en_US';
 

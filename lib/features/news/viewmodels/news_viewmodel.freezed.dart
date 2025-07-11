@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NewsViewState {
 
- List<NewsItem> get news; bool get isLoading; String? get error; String? get selectedCategory;
+ List<NewsItem> get news; bool get isLoading; bool get isLoadingMore; bool get hasMoreData; String? get error; String get selectedCategory;
 /// Create a copy of NewsViewState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $NewsViewStateCopyWith<NewsViewState> get copyWith => _$NewsViewStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewsViewState&&const DeepCollectionEquality().equals(other.news, news)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewsViewState&&const DeepCollectionEquality().equals(other.news, news)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore)&&(identical(other.hasMoreData, hasMoreData) || other.hasMoreData == hasMoreData)&&(identical(other.error, error) || other.error == error)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(news),isLoading,error,selectedCategory);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(news),isLoading,isLoadingMore,hasMoreData,error,selectedCategory);
 
 @override
 String toString() {
-  return 'NewsViewState(news: $news, isLoading: $isLoading, error: $error, selectedCategory: $selectedCategory)';
+  return 'NewsViewState(news: $news, isLoading: $isLoading, isLoadingMore: $isLoadingMore, hasMoreData: $hasMoreData, error: $error, selectedCategory: $selectedCategory)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $NewsViewStateCopyWith<$Res>  {
   factory $NewsViewStateCopyWith(NewsViewState value, $Res Function(NewsViewState) _then) = _$NewsViewStateCopyWithImpl;
 @useResult
 $Res call({
- List<NewsItem> news, bool isLoading, String? error, String? selectedCategory
+ List<NewsItem> news, bool isLoading, bool isLoadingMore, bool hasMoreData, String? error, String selectedCategory
 });
 
 
@@ -63,13 +63,15 @@ class _$NewsViewStateCopyWithImpl<$Res>
 
 /// Create a copy of NewsViewState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? news = null,Object? isLoading = null,Object? error = freezed,Object? selectedCategory = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? news = null,Object? isLoading = null,Object? isLoadingMore = null,Object? hasMoreData = null,Object? error = freezed,Object? selectedCategory = null,}) {
   return _then(_self.copyWith(
 news: null == news ? _self.news : news // ignore: cast_nullable_to_non_nullable
 as List<NewsItem>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
+as bool,hasMoreData: null == hasMoreData ? _self.hasMoreData : hasMoreData // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,selectedCategory: null == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -80,7 +82,7 @@ as String?,
 
 
 class _NewsViewState implements NewsViewState {
-  const _NewsViewState({final  List<NewsItem> news = const [], this.isLoading = false, this.error, this.selectedCategory}): _news = news;
+  const _NewsViewState({final  List<NewsItem> news = const [], this.isLoading = false, this.isLoadingMore = false, this.hasMoreData = false, this.error, this.selectedCategory = 'All'}): _news = news;
   
 
  final  List<NewsItem> _news;
@@ -91,8 +93,10 @@ class _NewsViewState implements NewsViewState {
 }
 
 @override@JsonKey() final  bool isLoading;
+@override@JsonKey() final  bool isLoadingMore;
+@override@JsonKey() final  bool hasMoreData;
 @override final  String? error;
-@override final  String? selectedCategory;
+@override@JsonKey() final  String selectedCategory;
 
 /// Create a copy of NewsViewState
 /// with the given fields replaced by the non-null parameter values.
@@ -104,16 +108,16 @@ _$NewsViewStateCopyWith<_NewsViewState> get copyWith => __$NewsViewStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewsViewState&&const DeepCollectionEquality().equals(other._news, _news)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.error, error) || other.error == error)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewsViewState&&const DeepCollectionEquality().equals(other._news, _news)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore)&&(identical(other.hasMoreData, hasMoreData) || other.hasMoreData == hasMoreData)&&(identical(other.error, error) || other.error == error)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_news),isLoading,error,selectedCategory);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_news),isLoading,isLoadingMore,hasMoreData,error,selectedCategory);
 
 @override
 String toString() {
-  return 'NewsViewState(news: $news, isLoading: $isLoading, error: $error, selectedCategory: $selectedCategory)';
+  return 'NewsViewState(news: $news, isLoading: $isLoading, isLoadingMore: $isLoadingMore, hasMoreData: $hasMoreData, error: $error, selectedCategory: $selectedCategory)';
 }
 
 
@@ -124,7 +128,7 @@ abstract mixin class _$NewsViewStateCopyWith<$Res> implements $NewsViewStateCopy
   factory _$NewsViewStateCopyWith(_NewsViewState value, $Res Function(_NewsViewState) _then) = __$NewsViewStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<NewsItem> news, bool isLoading, String? error, String? selectedCategory
+ List<NewsItem> news, bool isLoading, bool isLoadingMore, bool hasMoreData, String? error, String selectedCategory
 });
 
 
@@ -141,13 +145,15 @@ class __$NewsViewStateCopyWithImpl<$Res>
 
 /// Create a copy of NewsViewState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? news = null,Object? isLoading = null,Object? error = freezed,Object? selectedCategory = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? news = null,Object? isLoading = null,Object? isLoadingMore = null,Object? hasMoreData = null,Object? error = freezed,Object? selectedCategory = null,}) {
   return _then(_NewsViewState(
 news: null == news ? _self._news : news // ignore: cast_nullable_to_non_nullable
 as List<NewsItem>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
+as bool,hasMoreData: null == hasMoreData ? _self.hasMoreData : hasMoreData // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,selectedCategory: null == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

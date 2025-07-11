@@ -9,7 +9,10 @@ class NewsServiceImpl implements NewsService {
   NewsServiceImpl(this._repository);
 
   @override
-  Future<List<NewsItem>> getAllWrestlingNews() async {
+  Future<List<NewsItem>> getAllWrestlingNews({
+    int offset = 0,
+    int limit = NewsConstants.newsItemsPerPage,
+  }) async {
     List<NewsItem> allNews = [];
 
     for (String keyword in NewsConstants.wrestlingKeywords) {
@@ -21,17 +24,42 @@ class NewsServiceImpl implements NewsService {
       }
     }
 
-    return _processNews(allNews);
+    final processedNews = _processNews(allNews);
+
+    // オフセットとリミットを適用
+    final startIndex = offset;
+    final endIndex = (offset + limit).clamp(0, processedNews.length);
+
+    if (startIndex >= processedNews.length) {
+      return []; // これ以上データなし
+    }
+
+    // 指定範囲を切り出し
+    return processedNews.sublist(startIndex, endIndex);
   }
 
   @override
-  Future<List<NewsItem>> getNewsByKeyword(String keyword) async {
+  Future<List<NewsItem>> getNewsByKeyword(
+    String keyword, {
+    int offset = 0,
+    int limit = NewsConstants.newsItemsPerPage,
+  }) async {
     try {
       final news = await _repository.getNewsItem(keyword: keyword);
-      return _processNews(news);
+      final processedNews = _processNews(news);
+
+      // オフセットとリミットを適用
+      final startIndex = offset;
+      final endIndex = (offset + limit).clamp(0, processedNews.length);
+
+      if (startIndex >= processedNews.length) {
+        return []; // これ以上データなし
+      }
+
+      return processedNews.sublist(startIndex, endIndex);
     } catch (e) {
       print('キーワード「$keyword」のエラー: $e');
-      rethrow;  // ViewModelでエラーハンドリング
+      rethrow; // ViewModelでエラーハンドリング
     }
   }
 

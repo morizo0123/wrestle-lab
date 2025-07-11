@@ -13,7 +13,7 @@ class NewsRepositoryImpl implements NewsRepository {
   @override
   Future<List<NewsItem>> getNewsItem({required String keyword}) async {
     try {
-      final url = '${NewsConstants.baseRssUrl}$keyword';
+      final url = '${NewsConstants.baseRssUrl}$keyword${NewsConstants.rssParams}';
       final response = await _dio.get(url);
 
       // XMLドキュメントをパース

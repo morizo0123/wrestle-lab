@@ -9,6 +9,7 @@ class RoutePathName {
   static const String youtube = '/youtube';
   static const String myHistory = '/my-history';
   static const String news = '/news';
+  static const String newsWeb = '/news/web';
 
   // ルート名
   static const String homeName = 'home';
@@ -18,4 +19,5 @@ class RoutePathName {
   static const String youtubeName = 'youtube';
   static const String myHistoryName = 'myHistory';
   static const String newsName = 'news';
+  static const String newsWebName = 'newsWeb';
 }

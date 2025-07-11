@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wrestle_lab/features/events/screens/events_screen.dart';
+import 'package:wrestle_lab/features/news/models/news_item.dart';
+import 'package:wrestle_lab/features/news/screens/news_webview_screen.dart';
 import 'package:wrestle_lab/features/root/root_layout.dart';
 import 'package:wrestle_lab/features/home/screens/home_tab_screen.dart';
 import 'package:wrestle_lab/features/my_history/screens/history_screen.dart';
@@ -51,7 +53,7 @@ final appRouter = GoRouter(
       ],
     ),
 
-    // Shell外のページ（WebViewなど）
+    // 団体WebView
     GoRoute(
       path: RoutePathName.organizationWeb,
       name: RoutePathName.organizationWebName,
@@ -66,5 +68,15 @@ final appRouter = GoRouter(
         return OrganizationWebViewScreen(url: url, name: name);
       },
     ),
+
+    // ニュースWebView
+    GoRoute(
+      path: RoutePathName.newsWeb,
+      name: RoutePathName.newsWebName,
+      builder: (context, state) {
+        final newsItem = state.extra as NewsItem;
+        return NewsWebviewScreen(newsItem: newsItem);
+      }
+    )
   ],
 );
