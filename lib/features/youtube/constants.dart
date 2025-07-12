@@ -17,6 +17,19 @@ class YoutubeConstants {
   static const String type = 'video';
   static const int maxResults = 20;
 
-  // タブ用キーワード
-  static const List<String> searchKeywords = ['新日本プロレス', 'プロレスリング・ノア', 'スターダム'];
+  // プロレス関連キーワード（検索用）
+  static const List<String> wrestlingKeywords = [
+    '新日本プロレス',
+    'プロレスリング・ノア',
+    'スターダム',
+  ];
+
+  // カテゴリ定義（タブ表示用）
+  static const String allCategory = 'All';
+  static const List<String> categories = [
+    allCategory,
+    '新日本プロレス',
+    'プロレスリング・ノア',
+    'スターダム',
+  ];
 }
