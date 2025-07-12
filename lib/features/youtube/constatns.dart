@@ -1,3 +1,0 @@
-class YoutubeVideoConstants {
-  YoutubeVideoConstants._();
-}
