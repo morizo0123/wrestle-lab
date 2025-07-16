@@ -43,7 +43,45 @@ final youtubeServiceProvider = AutoDisposeProvider<YoutubeService>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef YoutubeServiceRef = AutoDisposeProviderRef<YoutubeService>;
-String _$youtubeViewModelHash() => r'b16d987623a3d6d5f68e1d37ecd73766d8b1d4fd';
+String _$favoriteRepositoryHash() =>
+    r'f6ecea0ed18d738fa75b699d5bb0877af78543b1';
+
+/// See also [favoriteRepository].
+@ProviderFor(favoriteRepository)
+final favoriteRepositoryProvider =
+    AutoDisposeProvider<FavoriteRepository>.internal(
+      favoriteRepository,
+      name: r'favoriteRepositoryProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$favoriteRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FavoriteRepositoryRef = AutoDisposeProviderRef<FavoriteRepository>;
+String _$favoriteServiceHash() => r'5996bd780c7c6c3136f11bb010ad5fef6563be9b';
+
+/// See also [favoriteService].
+@ProviderFor(favoriteService)
+final favoriteServiceProvider = AutoDisposeProvider<FavoriteService>.internal(
+  favoriteService,
+  name: r'favoriteServiceProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$favoriteServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FavoriteServiceRef = AutoDisposeProviderRef<FavoriteService>;
+String _$youtubeViewModelHash() => r'ccbbd33de0fac89a72e820e19e106a4f46d2e4c0';
 
 /// See also [YoutubeViewModel].
 @ProviderFor(YoutubeViewModel)

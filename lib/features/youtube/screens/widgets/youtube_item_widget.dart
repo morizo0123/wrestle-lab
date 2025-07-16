@@ -6,6 +6,7 @@ class YoutubeItemWidget extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onFavoritePressed;
   final VoidCallback? onSharePressed;
+  final bool isFavorite;
 
   const YoutubeItemWidget({
     super.key,
@@ -13,6 +14,7 @@ class YoutubeItemWidget extends StatelessWidget {
     this.onTap,
     this.onFavoritePressed,
     this.onSharePressed,
+    this.isFavorite = false,
   });
 
   @override
@@ -117,11 +119,18 @@ class YoutubeItemWidget extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.favorite_border, size: 20, color: Colors.grey[600]),
+              Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                size: 20,
+                color: isFavorite ? Colors.pink : Colors.grey[600],
+              ),
               const SizedBox(width: 4),
               Text(
-                'お気に入り',
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                isFavorite ? 'お気に入り済み' : 'お気に入り',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isFavorite ? Colors.pink : Colors.grey[600],
+                ),
               ),
             ],
           ),

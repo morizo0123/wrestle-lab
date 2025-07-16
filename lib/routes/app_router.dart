@@ -9,6 +9,7 @@ import 'package:wrestle_lab/features/my_history/screens/history_screen.dart';
 import 'package:wrestle_lab/features/news/screens/news_screen.dart';
 import 'package:wrestle_lab/features/organizations/screens/organization_webview_screen.dart';
 import 'package:wrestle_lab/features/organizations/screens/organizations_screen.dart';
+import 'package:wrestle_lab/features/youtube/screens/favorite_videos_screen.dart';
 import 'package:wrestle_lab/features/youtube/screens/youtube_screen.dart';
 import 'package:wrestle_lab/routes/route_path_name.dart';
 
@@ -76,7 +77,14 @@ final appRouter = GoRouter(
       builder: (context, state) {
         final newsItem = state.extra as NewsItem;
         return NewsWebviewScreen(newsItem: newsItem);
-      }
-    )
+      },
+    ),
+
+    // お気に入りvideo
+    GoRoute(
+      path: RoutePathName.youtubeFavoriteVideos,
+      name: RoutePathName.youtubeFavoriteVideosName,
+      builder: (context, state) => const FavoriteVideosScreen(),
+    ),
   ],
 );

@@ -7,6 +7,7 @@ class RoutePathName {
   static const String organizations = '/organizations';
   static const String organizationWeb = '/organizations/web';
   static const String youtube = '/youtube';
+  static const String youtubeFavoriteVideos = '/youtube/favorite-videos';
   static const String myHistory = '/my-history';
   static const String news = '/news';
   static const String newsWeb = '/news/web';
@@ -17,6 +18,7 @@ class RoutePathName {
   static const String organizationsName = 'organizations';
   static const String organizationWebName = 'organizationWeb';
   static const String youtubeName = 'youtube';
+  static const String youtubeFavoriteVideosName = 'favoriteVideos';
   static const String myHistoryName = 'myHistory';
   static const String newsName = 'news';
   static const String newsWebName = 'newsWeb';

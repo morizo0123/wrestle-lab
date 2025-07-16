@@ -18,6 +18,7 @@ class _YoutubeScreenState extends ConsumerState<YoutubeScreen>
   final ScrollController _scrollController = ScrollController();
   String? nextPageToken;
   late TabController _tabController;
+  Set<String> favoriteVideoIds = {};
 
   @override
   void initState() {
@@ -32,7 +33,21 @@ class _YoutubeScreenState extends ConsumerState<YoutubeScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
           .read(youtubeViewModelProvider.notifier)
-          .loadVideosByKeyword(YoutubeConstants.defaultCategory, nextPageToken);
+          .loadVideosByKeyword(
+            keyword: YoutubeConstants.defaultCategory,
+            nextPageToken: null,
+          );
+    });
+
+    // 初期化時にお気に入り状態を取得
+    _loadFavoriteStatus();
+  }
+
+  Future<void> _loadFavoriteStatus() async {
+    final ids =
+        await ref.read(youtubeViewModelProvider.notifier).getFavoriteVideoIds();
+    setState(() {
+      favoriteVideoIds = ids;
     });
   }
 
@@ -44,7 +59,7 @@ class _YoutubeScreenState extends ConsumerState<YoutubeScreen>
 
     ref
         .read(youtubeViewModelProvider.notifier)
-        .loadVideosByKeyword(selectedCategory, nextPageToken);
+        .loadVideosByKeyword(keyword: selectedCategory, nextPageToken: null);
   }
 
   void _onScroll() {}
@@ -135,6 +150,7 @@ class _YoutubeScreenState extends ConsumerState<YoutubeScreen>
         final video = viewState.videos[index];
         return YoutubeItemWidget(
           video: video,
+          isFavorite: favoriteVideoIds.contains(video.videoId),
           onTap: () => _onVideoTap(video),
           onFavoritePressed: () => _onFavoritePressed(video),
           onSharePressed: () => _onSharePressed(video),
@@ -148,12 +164,24 @@ class _YoutubeScreenState extends ConsumerState<YoutubeScreen>
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => YoutubePlayerBottomsheet(video: video),
+      builder:
+          (context) => YoutubePlayerBottomsheet(
+            video: video,
+            isFavorite: favoriteVideoIds.contains(video.videoId),
+          ),
     );
   }
 
-  void _onFavoritePressed(YoutubeVideo video) {
-    print('お気に入りタップ: ${video.title}');
+  void _onFavoritePressed(YoutubeVideo video) async {
+    ref.read(youtubeViewModelProvider.notifier).toggleFavorite(video);
+
+    // お気に入り削除後、一覧を更新
+    Future.delayed(const Duration(milliseconds: 500), () {
+      ref.read(youtubeViewModelProvider.notifier).loadFavoriteVideos();
+    });
+
+    // お気に入り状態を更新
+    await _loadFavoriteStatus();
   }
 
   void _onSharePressed(YoutubeVideo video) {

@@ -6,10 +6,12 @@ import 'package:wrestle_lab/features/youtube/viewmodels/youtube_viewmodel.dart';
 
 class YoutubePlayerBottomsheet extends ConsumerStatefulWidget {
   final YoutubeVideo video;
+  final bool isFavorite;
 
   const YoutubePlayerBottomsheet({
     super.key,
     required this.video,
+    this.isFavorite = false,
   });
 
   @override
@@ -19,32 +21,30 @@ class YoutubePlayerBottomsheet extends ConsumerStatefulWidget {
 class _YoutubePlayerBottomsheetState
     extends ConsumerState<YoutubePlayerBottomsheet> {
   late WebViewController _controller;
+  late bool _currentFavoriteStatus;
 
   @override
   void initState() {
     super.initState();
+    _currentFavoriteStatus = widget.isFavorite;
     _initializeWebView();
   }
 
   void _initializeWebView() {
     _controller =
-    WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse(_getEmbedUrl()));
+        WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(Uri.parse(_getEmbedUrl()));
   }
 
   String _getEmbedUrl() {
-    return 'https://www.youtube.com/embed/${widget.video
-        .videoId}?autoplay=1&modestbranding=1&rel=0';
+    return 'https://www.youtube.com/embed/${widget.video.videoId}?autoplay=1&modestbranding=1&rel=0';
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery
-          .of(context)
-          .size
-          .height * 0.6,
+      height: MediaQuery.of(context).size.height * 0.6,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
@@ -99,8 +99,24 @@ class _YoutubePlayerBottomsheetState
                     children: [
                       ElevatedButton.icon(
                         onPressed: () => _onFavoritePressed(),
-                        icon: const Icon(Icons.favorite_border),
-                        label: const Text('お気に入り'),
+                        icon: Icon(
+                          _currentFavoriteStatus
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color:
+                              _currentFavoriteStatus
+                                  ? Colors.pink
+                                  : Colors.grey[600],
+                        ),
+                        label: Text(
+                          _currentFavoriteStatus ? 'お気に入り済み' : 'お気に入り',
+                          style: TextStyle(
+                            color:
+                                _currentFavoriteStatus
+                                    ? Colors.pink
+                                    : Colors.grey[600],
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 16),
                       ElevatedButton.icon(
@@ -120,7 +136,18 @@ class _YoutubePlayerBottomsheetState
   }
 
   void _onFavoritePressed() {
-    print('お気に入り: ${widget.video.title}');
+    // お気に入り状態を即座に更新（UI反映）
+    setState(() {
+      _currentFavoriteStatus = !_currentFavoriteStatus;
+    });
+
+    // ViewModelのお気に入り処理を実行
+    ref.read(youtubeViewModelProvider.notifier).toggleFavorite(widget.video);
+
+    // お気に入り削除後、一覧を更新
+    Future.delayed(const Duration(milliseconds: 500), () {
+      ref.read(youtubeViewModelProvider.notifier).loadFavoriteVideos();
+    });
   }
 
   void _onSharePressed() {
