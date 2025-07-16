@@ -1,12 +1,162 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wrestle_lab/features/youtube/constants.dart';
+import 'package:wrestle_lab/features/youtube/models/youtube_video.dart';
+import 'package:wrestle_lab/features/youtube/screens/widgets/youtube_item_widget.dart';
+import 'package:wrestle_lab/features/youtube/screens/widgets/youtube_player_bottomsheet.dart';
+import 'package:wrestle_lab/features/youtube/viewmodels/youtube_viewmodel.dart';
 
-class YoutubeScreen extends StatelessWidget {
+class YoutubeScreen extends ConsumerStatefulWidget {
   const YoutubeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text('YouTube')),
+  ConsumerState createState() => _YoutubeScreenState();
+}
+
+class _YoutubeScreenState extends ConsumerState<YoutubeScreen>
+    with SingleTickerProviderStateMixin {
+  final ScrollController _scrollController = ScrollController();
+  String? nextPageToken;
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      length: YoutubeConstants.categories.length,
+      vsync: this,
     );
+    _tabController.addListener(_onTabChanged);
+
+    _scrollController.addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(youtubeViewModelProvider.notifier)
+          .loadVideosByKeyword(YoutubeConstants.defaultCategory, nextPageToken);
+    });
+  }
+
+  void _onTabChanged() {
+    // true: タブ切り替えアニメーション中, false: タブ切り替え完了済み
+    if (!_tabController.indexIsChanging) return;
+
+    final selectedCategory = YoutubeConstants.categories[_tabController.index];
+
+    ref
+        .read(youtubeViewModelProvider.notifier)
+        .loadVideosByKeyword(selectedCategory, nextPageToken);
+  }
+
+  void _onScroll() {}
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final viewState = ref.watch(youtubeViewModelProvider);
+    final viewModel = ref.read(youtubeViewModelProvider.notifier);
+
+    return _buildBody(viewState, viewModel);
+  }
+
+  Widget _buildBody(YoutubeViewState viewState, YoutubeViewModel viewModel) {
+    return Column(
+      children: [
+        // タブバー
+        Container(
+          height: 50,
+          color: Colors.white,
+          child: TabBar(
+            controller: _tabController,
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
+            indicatorColor: Colors.black,
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.grey,
+            labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            unselectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.normal,
+            ),
+            tabs:
+                YoutubeConstants.categories
+                    .map((category) => Tab(text: category))
+                    .toList(),
+          ),
+        ),
+
+        // ビデオリスト
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children:
+                YoutubeConstants.categories
+                    .map((category) => _buildVideoList(viewState, viewModel))
+                    .toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVideoList(
+    YoutubeViewState viewState,
+    YoutubeViewModel viewModel,
+  ) {
+    if (viewState.isLoading) {
+      return Center(child: const CircularProgressIndicator());
+    }
+
+    if (viewState.error != null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(viewState.error!),
+            ElevatedButton(onPressed: () {}, child: const Text('再試行')),
+          ],
+        ),
+      );
+    }
+
+    if (viewState.videos.isEmpty) {
+      return const Center(child: Text('動画がありません'));
+    }
+
+    return ListView.separated(
+      controller: _scrollController,
+      itemCount: viewState.videos.length,
+      separatorBuilder: (context, index) => const Divider(height: 1),
+      itemBuilder: (context, index) {
+        final video = viewState.videos[index];
+        return YoutubeItemWidget(
+          video: video,
+          onTap: () => _onVideoTap(video),
+          onFavoritePressed: () => _onFavoritePressed(video),
+          onSharePressed: () => _onSharePressed(video),
+        );
+      },
+    );
+  }
+
+  void _onVideoTap(YoutubeVideo video) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => YoutubePlayerBottomsheet(video: video),
+    );
+  }
+
+  void _onFavoritePressed(YoutubeVideo video) {
+    print('お気に入りタップ: ${video.title}');
+  }
+
+  void _onSharePressed(YoutubeVideo video) {
+    ref.read(youtubeViewModelProvider.notifier).shareVideo(video);
   }
 }

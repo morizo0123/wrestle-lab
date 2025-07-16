@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:wrestle_lab/features/youtube/constants.dart';
 import 'package:wrestle_lab/features/youtube/models/youtube_video.dart';
 import 'package:wrestle_lab/features/youtube/repositories/youtube_repository.dart';
 import 'package:wrestle_lab/features/youtube/repositories/youtube_repository_impl.dart';
@@ -28,7 +30,7 @@ abstract class YoutubeViewState with _$YoutubeViewState {
     @Default(false) bool isLoadingMore,
     @Default(true) bool hasMoreData,
     String? error,
-    @Default('All') String selectedCategory,
+    @Default(YoutubeConstants.defaultCategory) String selectedCategory,
   }) = _YoutubeViewState;
 }
 
@@ -39,18 +41,18 @@ class YoutubeViewModel extends _$YoutubeViewModel {
     return const YoutubeViewState();
   }
 
-  Future<void> loadAllWrestlingVideos(String? nextPageToken) async {
-    state = state.copyWith(isLoading: true, error: null);
-
-    try {
-      final service = ref.read(youtubeServiceProvider);
-      final result = await service.getAllWrestlingVideos();
-
-      state = state.copyWith(videos: result.videos, isLoading: false);
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
-    }
-  }
+  // Future<void> loadAllWrestlingVideos(String? nextPageToken) async {
+  //   state = state.copyWith(isLoading: true, error: null);
+  //
+  //   try {
+  //     final service = ref.read(youtubeServiceProvider);
+  //     final result = await service.getAllWrestlingVideos();
+  //
+  //     state = state.copyWith(videos: result.videos, isLoading: false);
+  //   } catch (e) {
+  //     state = state.copyWith(isLoading: false, error: e.toString());
+  //   }
+  // }
 
   Future<void> loadVideosByKeyword(
     String keyword,
@@ -68,6 +70,25 @@ class YoutubeViewModel extends _$YoutubeViewModel {
       state = state.copyWith(videos: result.videos, isLoading: false);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
+    }
+  }
+
+  Future<void> shareVideo(YoutubeVideo video) async {
+    try {
+      final shareText = '''
+      ${video.title}
+      ${video.channelTitle}
+      ${video.url}
+      
+      Wrestle Labで見つけた動画をシェア！
+      ''';
+
+      await Share.share(
+        shareText,
+        subject: shareText
+      );
+    } catch (e) {
+      state = state.copyWith(error: 'シェアに失敗しました');
     }
   }
 }

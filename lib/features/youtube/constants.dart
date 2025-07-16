@@ -15,7 +15,7 @@ class YoutubeConstants {
   // APIパラメータ
   static const String part = 'snippet';
   static const String type = 'video';
-  static const int maxResults = 20;
+  static const int maxResults = 50;
 
   // プロレス関連キーワード（検索用）
   static const List<String> wrestlingKeywords = [
@@ -25,11 +25,13 @@ class YoutubeConstants {
   ];
 
   // カテゴリ定義（タブ表示用）
-  static const String allCategory = 'All';
+  static const String defaultCategory = '新日本プロレス';
   static const List<String> categories = [
-    allCategory,
-    '新日本プロレス',
+    defaultCategory,
     'プロレスリング・ノア',
     'スターダム',
   ];
+
+  // キャッシュ設定
+  static const Duration cacheDuration = Duration(hours: 6);
 }

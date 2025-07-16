@@ -8,36 +8,47 @@ class YoutubeServiceImpl implements YoutubeService {
 
   YoutubeServiceImpl(this._repository);
 
-  @override
-  Future<({List<YoutubeVideo> videos, String? nextPageToken})>
-  getAllWrestlingVideos({String? nextPageToken}) async {
-    List<YoutubeVideo> allVideos = [];
-
-    for (String keyword in YoutubeConstants.wrestlingKeywords) {
-      try {
-        final result = await _repository.getVideos(keyword: keyword);
-        allVideos.addAll(result.videos);
-      } catch (e) {
-        print('キーワード「$keyword」のエラー: $e');
-      }
-    }
-
-    // 日付ソート
-    allVideos.sort((a, b) => b.publishedAt.compareTo(a.publishedAt));
-
-    return (videos: allVideos, nextPageToken: null);
-  }
+  /**
+   * キャッシュ用のMapを定義
+   * String: キーワード（例：「新日本プロレス」）
+   * Record型: 動画リスト + 保存した日時をセット
+   * '新日本プロレス': (videos: [動画1, 動画2, ...], cachedAt: 2025-07-14 10:30:00),
+   */
+  final Map<String, ({List<YoutubeVideo> videos, DateTime cachedAt})> _cache =
+      {};
 
   @override
   Future<({List<YoutubeVideo> videos, String? nextPageToken})>
   getVideosByKeyword({required String keyword, String? nextPageToken}) async {
+    // nextPageTokenがある場合はキャッシュを使わない（追加読み込み）
+    if (nextPageToken != null) {
+      return await _repository.getVideos(
+        keyword: keyword,
+        nextPageToken: nextPageToken,
+      );
+    }
+
+    // キャッシュチェック
+    if (_cache.containsKey(keyword)) {
+      final cached = _cache[keyword]!;
+      final now = DateTime.now();
+
+      // キャッシュが有効期限内か確認
+      if (now.difference(cached.cachedAt) < YoutubeConstants.cacheDuration) {
+        print('✅ キャッシュから取得: $keyword');
+        return (videos: cached.videos, nextPageToken: null);
+      }
+    }
+
+    // API呼び出し + キャッシュ保存
+    print('🌐 API呼び出し: $keyword');
     try {
       final result = await _repository.getVideos(keyword: keyword);
 
-      // 日付ソート
-      result.videos.sort((a, b) => b.publishedAt.compareTo(a.publishedAt));
+      // キャッシュに保存
+      _cache[keyword] = (videos: result.videos, cachedAt: DateTime.now());
 
-      return (videos: result.videos, nextPageToken: result.nextPageToken);
+      return result;
     } catch (e) {
       print('キーワード「$keyword」のエラー: $e');
       rethrow; // ViewModelでエラーハンドリング
