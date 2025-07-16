@@ -131,8 +131,24 @@ class _YoutubeScreenState extends ConsumerState<YoutubeScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Icon(
+              Icons.error_outline,
+              size: 64,
+              color: Colors.grey[400],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'エラーが発生しました',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[600],
+              ),
+            ),
+            const SizedBox(height: 8),
             Text(viewState.error!),
-            ElevatedButton(onPressed: () {}, child: const Text('再試行')),
+            const SizedBox(height: 24),
+            // ElevatedButton(onPressed: () {}, child: const Text('再試行')),
           ],
         ),
       );

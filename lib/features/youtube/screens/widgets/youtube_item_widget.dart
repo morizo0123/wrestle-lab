@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wrestle_lab/features/youtube/models/youtube_video.dart';
 
@@ -60,15 +61,19 @@ class YoutubeItemWidget extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          video.thumbnail,
+        child: CachedNetworkImage(
+          imageUrl: video.thumbnail,
           fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return Container(
-              color: Colors.grey[300],
-              child: const Icon(Icons.play_circle_outline, size: 40),
-            );
-          },
+          placeholder: (context, url) => Container(
+            color: Colors.grey[300],
+            child: const Center(
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+          ),
+          errorWidget: (context, url, error) => Container(
+            color: Colors.grey[300],
+            child: const Icon(Icons.play_circle_outline, size: 40),
+          ),
         ),
       ),
     );
