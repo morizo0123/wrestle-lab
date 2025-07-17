@@ -7,10 +7,10 @@ class RoutePathName {
   static const String organizations = '/organizations';
   static const String organizationWeb = '/organizations/web';
   static const String youtube = '/youtube';
-  static const String youtubeFavoriteVideos = 'favorite-videos';
+  static const String youtubeFavoriteVideos = '/youtube/favorite-videos';
   static const String myHistory = '/my-history';
-  static const String myHistoryCreate = 'create';
-  static const String myHistoryDetail = ':id';
+  static const String myHistoryCreate = '/my-history/create';
+  static const String myHistoryDetail = '/my-history/:id';
   static const String news = '/news';
   static const String newsWeb = '/news/web';
 

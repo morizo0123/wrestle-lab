@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wrestle_lab/features/events/screens/events_screen.dart';
+import 'package:wrestle_lab/features/my_history/screens/history_create_screen.dart';
 import 'package:wrestle_lab/features/news/models/news_item.dart';
 import 'package:wrestle_lab/features/news/screens/news_webview_screen.dart';
 import 'package:wrestle_lab/features/root/root_layout.dart';
@@ -40,28 +41,11 @@ final appRouter = GoRouter(
           path: RoutePathName.youtube,
           name: RoutePathName.youtubeName,
           builder: (context, state) => const YoutubeScreen(),
-          routes: [
-            GoRoute(
-              path: RoutePathName.youtubeFavoriteVideos,
-              name: RoutePathName.youtubeFavoriteVideosName,
-              builder: (context, state) => const FavoriteVideosScreen(),
-            ),
-          ]
         ),
         GoRoute(
           path: RoutePathName.myHistory,
           name: RoutePathName.myHistoryName,
           builder: (context, state) => const HistoryScreen(),
-          routes: [
-            // GoRoute(
-            //   path: RoutePathName.myHistoryCreate,
-            //   name: RoutePathName.myHistoryCreateName,
-            // ),
-            // GoRoute(
-            //   path: RoutePathName.myHistoryDetail,
-            //   name: RoutePathName.myHistoryDetailName,
-            // ),
-          ],
         ),
         GoRoute(
           path: RoutePathName.news,
@@ -96,5 +80,25 @@ final appRouter = GoRouter(
         return NewsWebviewScreen(newsItem: newsItem);
       },
     ),
+
+    // お気に入り動画
+    GoRoute(
+      path: RoutePathName.youtubeFavoriteVideos,
+      name: RoutePathName.youtubeFavoriteVideosName,
+      builder: (context, state) => const FavoriteVideosScreen(),
+    ),
+
+    // 観戦記録作成
+    GoRoute(
+      path: RoutePathName.myHistoryCreate,
+      name: RoutePathName.myHistoryCreateName,
+      builder: (context, state) => const HistoryCreateScreen(),
+    ),
+
+    // 観戦記録詳細
+    // GoRoute(
+    //   path: RoutePathName.myHistoryDetail,
+    //   name: RoutePathName.myHistoryDetailName,
+    // ),
   ],
 );
