@@ -45,6 +45,16 @@ final appRouter = GoRouter(
           path: RoutePathName.myHistory,
           name: RoutePathName.myHistoryName,
           builder: (context, state) => const HistoryScreen(),
+          routes: [
+            GoRoute(
+              path: RoutePathName.myHistoryCreate,
+              name: RoutePathName.myHistoryCreateName,
+            ),
+            GoRoute(
+              path: RoutePathName.myHistoryDetail,
+              name: RoutePathName.myHistoryDetailName,
+            ),
+          ],
         ),
         GoRoute(
           path: RoutePathName.news,
@@ -80,7 +90,7 @@ final appRouter = GoRouter(
       },
     ),
 
-    // お気に入りvideo
+    // お気に入り動画
     GoRoute(
       path: RoutePathName.youtubeFavoriteVideos,
       name: RoutePathName.youtubeFavoriteVideosName,
