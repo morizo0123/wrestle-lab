@@ -7,6 +7,7 @@ part of 'history.dart';
 // **************************************************************************
 
 _History _$HistoryFromJson(Map<String, dynamic> json) => _History(
+  id: (json['id'] as num).toInt(),
   eventDate: DateTime.parse(json['event_date'] as String),
   organization: json['organization'] as String,
   eventName: json['event_name'] as String,
@@ -16,6 +17,7 @@ _History _$HistoryFromJson(Map<String, dynamic> json) => _History(
 );
 
 Map<String, dynamic> _$HistoryToJson(_History instance) => <String, dynamic>{
+  'id': instance.id,
   'event_date': instance.eventDate.toIso8601String(),
   'organization': instance.organization,
   'event_name': instance.eventName,
