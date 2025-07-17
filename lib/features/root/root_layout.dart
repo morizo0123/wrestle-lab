@@ -41,6 +41,15 @@ class RootLayout extends StatelessWidget {
       );
     }
 
+    if (location == '/my-history') {
+      return FloatingActionButton(
+        onPressed: () => context.pushNamed(RoutePathName.myHistoryCreateName),
+        backgroundColor: Colors.red,
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: Colors.white),
+      );
+    }
+
     return null;
   }
 }
