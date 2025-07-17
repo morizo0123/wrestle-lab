@@ -45,6 +45,9 @@ class YoutubeServiceImpl implements YoutubeService {
     try {
       final result = await _repository.getVideos(keyword: keyword);
 
+      // 日付降順（新しい順）
+      result.videos.sort((a, b) => b.publishedAt.compareTo(a.publishedAt));
+
       // キャッシュに保存
       _cache[keyword] = (videos: result.videos, cachedAt: DateTime.now());
 

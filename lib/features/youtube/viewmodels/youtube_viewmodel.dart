@@ -18,21 +18,25 @@ part 'youtube_viewmodel.g.dart';
 
 @riverpod
 YoutubeRepository youtubeRepository(YoutubeRepositoryRef ref) {
+  ref.keepAlive();
   return YoutubeRepositoryImpl();
 }
 
 @riverpod
 YoutubeService youtubeService(YoutubeServiceRef ref) {
+  ref.keepAlive(); // 「このProviderを破棄しないで」と指示
   return YoutubeServiceImpl(ref.read(youtubeRepositoryProvider));
 }
 
 @riverpod
 FavoriteRepository favoriteRepository(FavoriteRepositoryRef ref) {
+  ref.keepAlive();
   return FavoriteRepositoryImpl();
 }
 
 @riverpod
 FavoriteService favoriteService(FavoriteServiceRef ref) {
+  ref.keepAlive();
   return FavoriteServiceImpl(ref.read(favoriteRepositoryProvider));
 }
 

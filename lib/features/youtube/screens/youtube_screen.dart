@@ -56,6 +56,7 @@ class _YoutubeScreenState extends ConsumerState<YoutubeScreen>
     if (!_tabController.indexIsChanging) return;
 
     final selectedCategory = YoutubeConstants.categories[_tabController.index];
+    final currentCategory = ref.read(youtubeViewModelProvider).selectedCategory;
 
     ref
         .read(youtubeViewModelProvider.notifier)
