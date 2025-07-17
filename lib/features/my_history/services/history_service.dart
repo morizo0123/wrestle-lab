@@ -1,6 +1,6 @@
 import 'package:wrestle_lab/features/my_history/models/history.dart';
 
-abstract class HistoryRepository {
+abstract class HistoryService {
   Future<List<History>> getHistories();
   Future<History> getHistoryById(int id);
   Future<void> addHistory(History history);

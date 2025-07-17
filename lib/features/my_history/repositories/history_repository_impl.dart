@@ -26,7 +26,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Future<History> getHistory(int id) async {
+  Future<History> getHistoryById(int id) async {
     try {
       /**
        * select() -> 全カラム取得
