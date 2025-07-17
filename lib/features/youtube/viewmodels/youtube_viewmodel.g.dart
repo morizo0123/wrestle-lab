@@ -81,7 +81,7 @@ final favoriteServiceProvider = AutoDisposeProvider<FavoriteService>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef FavoriteServiceRef = AutoDisposeProviderRef<FavoriteService>;
-String _$youtubeViewModelHash() => r'ccbbd33de0fac89a72e820e19e106a4f46d2e4c0';
+String _$youtubeViewModelHash() => r'644dbcadfbce9427feb7ff7a6c44dc6260af2384';
 
 /// See also [YoutubeViewModel].
 @ProviderFor(YoutubeViewModel)
