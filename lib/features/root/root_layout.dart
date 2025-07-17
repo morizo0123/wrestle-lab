@@ -34,7 +34,7 @@ class RootLayout extends StatelessWidget {
   Widget? _buildFloatingActionButton(String location, BuildContext context) {
     if (location == '/youtube') {
       return FloatingActionButton(
-        onPressed: () => context.push(RoutePathName.youtubeFavoriteVideos),
+        onPressed: () => context.pushNamed(RoutePathName.youtubeFavoriteVideosName),
         backgroundColor: Colors.red,
         shape: const CircleBorder(),
         child: const Icon(Icons.favorite, color: Colors.white),
