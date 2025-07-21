@@ -6,21 +6,39 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wrestle_lab/features/my_history/models/history.dart';
 import 'package:wrestle_lab/features/my_history/viewmodels/history_viewmodel.dart';
 
-class HistoryCreateScreen extends ConsumerStatefulWidget {
-  const HistoryCreateScreen({super.key});
+class HistoryEditScreen extends ConsumerStatefulWidget {
+  final History history;
+
+  const HistoryEditScreen({super.key, required this.history});
 
   @override
-  ConsumerState createState() => _HistoryCreateScreenState();
+  ConsumerState createState() => _HistoryEditScreenState();
 }
 
-class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
+class _HistoryEditScreenState extends ConsumerState<HistoryEditScreen> {
   DateTime? selectedDate;
   String? selectedOrganization;
   File? selectedImage;
 
-  final TextEditingController _eventNameController = TextEditingController();
-  final TextEditingController _venueController = TextEditingController();
-  final TextEditingController _reviewController = TextEditingController();
+  late TextEditingController _eventNameController;
+  late TextEditingController _venueController;
+  late TextEditingController _reviewController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 編集画面の初期化
+    selectedDate = widget.history.eventDate;
+    selectedOrganization = widget.history.organization;
+    _eventNameController = TextEditingController(
+      text: widget.history.eventName,
+    );
+    _venueController = TextEditingController(text: widget.history.venue);
+    _reviewController = TextEditingController(
+      text: widget.history.review ?? '',
+    );
+  }
 
   @override
   void dispose() {
@@ -31,14 +49,6 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(historyViewModelProvider.notifier).loadOrganizations();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final viewState = ref.watch(historyViewModelProvider);
     final viewModel = ref.read(historyViewModelProvider.notifier);
@@ -46,7 +56,7 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '観戦記録作成',
+          '観戦詳細編集',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         backgroundColor: Colors.white,
@@ -61,31 +71,33 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
         ),
       ),
 
-      body: _buildHistoryCreate(viewState),
+      body: _buildBody(viewState),
     );
   }
 
-  Widget _buildHistoryCreate(HistoryViewState viewState) {
+  Widget _buildBody(HistoryViewState viewState) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildDateField(),
-          const SizedBox(height: 24),
-          _buildOrganizationField(viewState),
-          const SizedBox(height: 24),
-          _buildEventNameField(),
-          const SizedBox(height: 24),
-          _buildVenueField(),
-          const SizedBox(height: 24),
-          _buildReviewField(),
-          const SizedBox(height: 24),
-          _buildPhotoField(),
-          const SizedBox(height: 24),
-          _buildSaveButton(),
-          const SizedBox(height: 24),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildDateField(),
+            const SizedBox(height: 24),
+            _buildOrganizationField(viewState),
+            const SizedBox(height: 24),
+            _buildEventNameField(),
+            const SizedBox(height: 24),
+            _buildVenueField(),
+            const SizedBox(height: 24),
+            _buildReviewField(),
+            const SizedBox(height: 24),
+            _buildPhotoField(),
+            const SizedBox(height: 24),
+            _buildSaveButton(),
+            const SizedBox(height: 24),
+          ],
+        ),
       ),
     );
   }
@@ -119,7 +131,6 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
                   selectedDate != null
                       ? '${selectedDate!.year}/${selectedDate!.month}/${selectedDate!.day}'
                       : '観戦日を選択',
-                  style: TextStyle(fontSize: 16, color: Colors.black87),
                 ),
                 Icon(Icons.calendar_today, color: Colors.grey[600], size: 20),
               ],
@@ -134,8 +145,8 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2020), // 2000年1月1日が選択可能な最古の日付
-      lastDate: DateTime.now(), // 未来の日付は選択不可
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
     );
 
     if (picked != null && picked != selectedDate) {
@@ -183,7 +194,23 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
     }
 
     if (viewState.organizations.isEmpty) {
-      return Center(child: const Text('団体一覧がありません'));
+      return Center(
+        child: Column(
+          children: [
+            const Text('団体一覧がありません'),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                ref.read(historyViewModelProvider.notifier).loadOrganizations();
+              },
+              child: const Text(
+                '再試行',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+      );
     }
 
     final orgNames = viewState.organizations.map((org) => org.name).toList();
@@ -437,30 +464,21 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
       width: double.infinity,
       height: 50,
       child: ElevatedButton(
-        onPressed: _saveHistory,
+        onPressed: _editHistory,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
           elevation: 2,
         ),
         child: const Text(
-          '記録する',
+          '保存する',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
     );
   }
 
-  // validation
-  bool _isFormValid() {
-    return selectedDate != null &&
-        selectedOrganization != null &&
-        _eventNameController.text.isNotEmpty &&
-        _venueController.text.isNotEmpty;
-  }
-
-  // 保存処理メソッド
-  void _saveHistory() {
+  void _editHistory() {
     if (selectedDate == null) {
       _showErrorSnackBar('観戦日を選択してください');
       return;
@@ -482,21 +500,22 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
     }
 
     // バリデーション通過後の保存処理
-    _performSave();
+    _performEdit();
   }
 
-  void _performSave() async {
+  void _performEdit() async {
     try {
-      String? photoUrl;
+      String? photoUrl = widget.history.photoUrl;
 
-      // 画像がある場合はアップロード
+      // 新しい画像が選択された場合はアップロード
       if (selectedImage != null) {
         photoUrl = await ref
             .read(historyViewModelProvider.notifier)
             .uploadImage(selectedImage!);
       }
 
-      final history = History(
+      final updatedHistory = History(
+        id: widget.history.id,
         eventDate: selectedDate!,
         eventName: _eventNameController.text,
         organization: selectedOrganization!,
@@ -505,12 +524,15 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
         photoUrl: photoUrl,
       );
 
-      await ref.read(historyViewModelProvider.notifier).addHistory(history);
+      await ref
+          .read(historyViewModelProvider.notifier)
+          .updateHistory(widget.history.id!, updatedHistory);
 
       // 保存成功用SnackBar
       _showSuccessSnackBar('観戦記録を保存しました');
-      context.pop();
+      context.pop(updatedHistory);
     } catch (e) {
+      print(e);
       _showErrorSnackBar('保存に失敗しました: ${e.toString()}');
     }
   }
@@ -573,17 +595,6 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
     );
   }
 
-  // フォームリセット
-  void _resetForm() {
-    setState(() {
-      selectedDate = null;
-      selectedOrganization = null;
-    });
-    _eventNameController.clear();
-    _venueController.clear();
-    _reviewController.clear();
-  }
-
   // 写真選択メソッド
   Future<void> _pickImage() async {
     try {
@@ -621,7 +632,7 @@ class _HistoryCreateScreenState extends ConsumerState<HistoryCreateScreen> {
           '写真',
           style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),

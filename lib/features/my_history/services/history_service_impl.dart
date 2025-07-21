@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:wrestle_lab/features/my_history/models/history.dart';
+import 'package:wrestle_lab/features/my_history/models/organization.dart';
 import 'package:wrestle_lab/features/my_history/repositories/history_repository.dart';
 import 'package:wrestle_lab/features/my_history/services/history_service.dart';
 
@@ -30,5 +32,15 @@ class HistoryServiceImpl implements HistoryService {
   @override
   Future<void> deleteHistory(int id) async {
     return _repository.deleteHistory(id);
+  }
+
+  @override
+  Future<List<Organization>> getOrganizations() async {
+    return _repository.getOrganizations();
+  }
+
+  @override
+  Future<String> uploadImage(File imageFile) async {
+    return _repository.uploadImage(imageFile);
   }
 }

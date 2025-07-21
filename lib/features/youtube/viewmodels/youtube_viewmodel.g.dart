@@ -6,7 +6,7 @@ part of 'youtube_viewmodel.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$youtubeRepositoryHash() => r'49f11af24c8ff69a7ba4b0adf739b773c7501a09';
+String _$youtubeRepositoryHash() => r'2484f8b4fc728d52cc6e63a855828bf463b2e667';
 
 /// See also [youtubeRepository].
 @ProviderFor(youtubeRepository)
@@ -25,7 +25,7 @@ final youtubeRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef YoutubeRepositoryRef = AutoDisposeProviderRef<YoutubeRepository>;
-String _$youtubeServiceHash() => r'e78049401ff1af80e119132bd871d6ec900ab827';
+String _$youtubeServiceHash() => r'b05e4813d746e5995e758de926845a1489366c49';
 
 /// See also [youtubeService].
 @ProviderFor(youtubeService)
@@ -44,7 +44,7 @@ final youtubeServiceProvider = AutoDisposeProvider<YoutubeService>.internal(
 // ignore: unused_element
 typedef YoutubeServiceRef = AutoDisposeProviderRef<YoutubeService>;
 String _$favoriteRepositoryHash() =>
-    r'f6ecea0ed18d738fa75b699d5bb0877af78543b1';
+    r'56f439b6b73b0bf820bb1217cc8374f1dc8b1507';
 
 /// See also [favoriteRepository].
 @ProviderFor(favoriteRepository)
@@ -63,7 +63,7 @@ final favoriteRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef FavoriteRepositoryRef = AutoDisposeProviderRef<FavoriteRepository>;
-String _$favoriteServiceHash() => r'5996bd780c7c6c3136f11bb010ad5fef6563be9b';
+String _$favoriteServiceHash() => r'9a527961a17b4f3bcc7051f6bf686d0eeb62d432';
 
 /// See also [favoriteService].
 @ProviderFor(favoriteService)

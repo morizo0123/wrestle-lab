@@ -7,6 +7,7 @@ import 'package:wrestle_lab/features/news/services/news_service_impl.dart';
 import 'package:wrestle_lab/routes/app_router.dart';
 import 'package:wrestle_lab/core/constants.dart';
 import 'features/news/models/news_item.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -24,11 +25,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      routerConfig: appRouter,
       title: AppConstants.appName,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      routerConfig: appRouter,
+      // ローカライゼーションの設定を追加
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ja', 'JP'),
+        Locale('en', 'US'),
+      ],
     );
   }
 }

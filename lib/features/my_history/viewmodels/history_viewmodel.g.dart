@@ -43,7 +43,7 @@ final historyServiceProvider = AutoDisposeProvider<HistoryService>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef HistoryServiceRef = AutoDisposeProviderRef<HistoryService>;
-String _$historyViewModelHash() => r'e6f02d05d6d65a081eda57fe6d55aef0b982cec1';
+String _$historyViewModelHash() => r'28c8b97ede09a511289b967fc9ec7620028ad910';
 
 /// See also [HistoryViewModel].
 @ProviderFor(HistoryViewModel)

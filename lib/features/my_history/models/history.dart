@@ -6,7 +6,7 @@ part 'history.g.dart';
 @freezed
 abstract class History with _$History {
   const factory History({
-    required int id,
+    int? id,
     @JsonKey(name: 'event_date') required DateTime eventDate,
     required String organization,
     @JsonKey(name: 'event_name') required String eventName,

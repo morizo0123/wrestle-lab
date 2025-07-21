@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$History {
 
- int get id;@JsonKey(name: 'event_date') DateTime get eventDate; String get organization;@JsonKey(name: 'event_name') String get eventName; String get venue; String? get review;@JsonKey(name: 'photo_url') String? get photoUrl;
+ int? get id;@JsonKey(name: 'event_date') DateTime get eventDate; String get organization;@JsonKey(name: 'event_name') String get eventName; String get venue; String? get review;@JsonKey(name: 'photo_url') String? get photoUrl;
 /// Create a copy of History
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $HistoryCopyWith<$Res>  {
   factory $HistoryCopyWith(History value, $Res Function(History) _then) = _$HistoryCopyWithImpl;
 @useResult
 $Res call({
- int id,@JsonKey(name: 'event_date') DateTime eventDate, String organization,@JsonKey(name: 'event_name') String eventName, String venue, String? review,@JsonKey(name: 'photo_url') String? photoUrl
+ int? id,@JsonKey(name: 'event_date') DateTime eventDate, String organization,@JsonKey(name: 'event_name') String eventName, String venue, String? review,@JsonKey(name: 'photo_url') String? photoUrl
 });
 
 
@@ -66,10 +66,10 @@ class _$HistoryCopyWithImpl<$Res>
 
 /// Create a copy of History
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? eventDate = null,Object? organization = null,Object? eventName = null,Object? venue = null,Object? review = freezed,Object? photoUrl = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? eventDate = null,Object? organization = null,Object? eventName = null,Object? venue = null,Object? review = freezed,Object? photoUrl = freezed,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,eventDate: null == eventDate ? _self.eventDate : eventDate // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,eventDate: null == eventDate ? _self.eventDate : eventDate // ignore: cast_nullable_to_non_nullable
 as DateTime,organization: null == organization ? _self.organization : organization // ignore: cast_nullable_to_non_nullable
 as String,eventName: null == eventName ? _self.eventName : eventName // ignore: cast_nullable_to_non_nullable
 as String,venue: null == venue ? _self.venue : venue // ignore: cast_nullable_to_non_nullable
@@ -86,10 +86,10 @@ as String?,
 @JsonSerializable()
 
 class _History implements History {
-  const _History({required this.id, @JsonKey(name: 'event_date') required this.eventDate, required this.organization, @JsonKey(name: 'event_name') required this.eventName, required this.venue, this.review, @JsonKey(name: 'photo_url') this.photoUrl});
+  const _History({this.id, @JsonKey(name: 'event_date') required this.eventDate, required this.organization, @JsonKey(name: 'event_name') required this.eventName, required this.venue, this.review, @JsonKey(name: 'photo_url') this.photoUrl});
   factory _History.fromJson(Map<String, dynamic> json) => _$HistoryFromJson(json);
 
-@override final  int id;
+@override final  int? id;
 @override@JsonKey(name: 'event_date') final  DateTime eventDate;
 @override final  String organization;
 @override@JsonKey(name: 'event_name') final  String eventName;
@@ -130,7 +130,7 @@ abstract mixin class _$HistoryCopyWith<$Res> implements $HistoryCopyWith<$Res> {
   factory _$HistoryCopyWith(_History value, $Res Function(_History) _then) = __$HistoryCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@JsonKey(name: 'event_date') DateTime eventDate, String organization,@JsonKey(name: 'event_name') String eventName, String venue, String? review,@JsonKey(name: 'photo_url') String? photoUrl
+ int? id,@JsonKey(name: 'event_date') DateTime eventDate, String organization,@JsonKey(name: 'event_name') String eventName, String venue, String? review,@JsonKey(name: 'photo_url') String? photoUrl
 });
 
 
@@ -147,10 +147,10 @@ class __$HistoryCopyWithImpl<$Res>
 
 /// Create a copy of History
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? eventDate = null,Object? organization = null,Object? eventName = null,Object? venue = null,Object? review = freezed,Object? photoUrl = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? eventDate = null,Object? organization = null,Object? eventName = null,Object? venue = null,Object? review = freezed,Object? photoUrl = freezed,}) {
   return _then(_History(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,eventDate: null == eventDate ? _self.eventDate : eventDate // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,eventDate: null == eventDate ? _self.eventDate : eventDate // ignore: cast_nullable_to_non_nullable
 as DateTime,organization: null == organization ? _self.organization : organization // ignore: cast_nullable_to_non_nullable
 as String,eventName: null == eventName ? _self.eventName : eventName // ignore: cast_nullable_to_non_nullable
 as String,venue: null == venue ? _self.venue : venue // ignore: cast_nullable_to_non_nullable

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wrestle_lab/features/events/screens/events_screen.dart';
+import 'package:wrestle_lab/features/my_history/models/history.dart';
 import 'package:wrestle_lab/features/my_history/screens/history_create_screen.dart';
+import 'package:wrestle_lab/features/my_history/screens/history_detail_screen.dart';
+import 'package:wrestle_lab/features/my_history/screens/history_edit_screen.dart';
 import 'package:wrestle_lab/features/news/models/news_item.dart';
 import 'package:wrestle_lab/features/news/screens/news_webview_screen.dart';
 import 'package:wrestle_lab/features/root/root_layout.dart';
@@ -96,9 +99,23 @@ final appRouter = GoRouter(
     ),
 
     // 観戦記録詳細
-    // GoRoute(
-    //   path: RoutePathName.myHistoryDetail,
-    //   name: RoutePathName.myHistoryDetailName,
-    // ),
+    GoRoute(
+      path: RoutePathName.myHistoryDetail,
+      name: RoutePathName.myHistoryDetailName,
+      builder: (context, state) {
+        final history = state.extra as History;
+        return HistoryDetailScreen(history: history);
+      },
+    ),
+
+    // 観戦記録編集
+    GoRoute(
+      path: RoutePathName.myHistoryEdit,
+      name: RoutePathName.myHistoryEditName,
+      builder: (context, state) {
+        final history = state.extra as History;
+        return HistoryEditScreen(history: history);
+      },
+    ),
   ],
 );

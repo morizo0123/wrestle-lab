@@ -10,7 +10,8 @@ class RoutePathName {
   static const String youtubeFavoriteVideos = '/youtube/favorite-videos';
   static const String myHistory = '/my-history';
   static const String myHistoryCreate = '/my-history/create';
-  static const String myHistoryDetail = '/my-history/:id';
+  static const String myHistoryDetail = '/my-history/detail';
+  static const String myHistoryEdit = '/my-history/edit';
   static const String news = '/news';
   static const String newsWeb = '/news/web';
 
@@ -24,6 +25,7 @@ class RoutePathName {
   static const String myHistoryName = 'myHistory';
   static const String myHistoryCreateName = 'myHistoryCreate';
   static const String myHistoryDetailName = 'myHistoryDetail';
+  static const String myHistoryEditName = 'myHistoryEdit';
   static const String newsName = 'news';
   static const String newsWebName = 'newsWeb';
 }
