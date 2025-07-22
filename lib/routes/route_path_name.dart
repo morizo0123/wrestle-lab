@@ -2,6 +2,7 @@ class RoutePathName {
   RoutePathName._();
 
   // パス
+  static const String splash = '/splash';
   static const String home = '/';
   static const String events = '/events';
   static const String organizations = '/organizations';
@@ -16,6 +17,7 @@ class RoutePathName {
   static const String newsWeb = '/news/web';
 
   // ルート名
+  static const String splashName = '/splash';
   static const String homeName = 'home';
   static const String eventsName = 'events';
   static const String organizationsName = 'organizations';

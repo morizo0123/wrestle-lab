@@ -13,12 +13,13 @@ import 'package:wrestle_lab/features/my_history/screens/history_screen.dart';
 import 'package:wrestle_lab/features/news/screens/news_screen.dart';
 import 'package:wrestle_lab/features/organizations/screens/organization_webview_screen.dart';
 import 'package:wrestle_lab/features/organizations/screens/organizations_screen.dart';
+import 'package:wrestle_lab/features/splash/screens/splash_screen.dart';
 import 'package:wrestle_lab/features/youtube/screens/favorite_videos_screen.dart';
 import 'package:wrestle_lab/features/youtube/screens/youtube_screen.dart';
 import 'package:wrestle_lab/routes/route_path_name.dart';
 
 final appRouter = GoRouter(
-  initialLocation: RoutePathName.home,
+  initialLocation: RoutePathName.splash,
   routes: [
     ShellRoute(
       builder: (context, state, child) {
@@ -56,6 +57,13 @@ final appRouter = GoRouter(
           builder: (context, state) => const NewsScreen(),
         ),
       ],
+    ),
+
+    // splash
+    GoRoute(
+      path: RoutePathName.splash,
+      name: RoutePathName.splashName,
+      builder: (context, state) => const SplashScreen(),
     ),
 
     // 団体WebView
